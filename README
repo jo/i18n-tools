@@ -3,13 +3,6 @@ I18n-tools
 
 Some tools for handling i18n files.
 
-
-Example
-=======
-
-3. Collecting
-2. Converting
-1. Merging
-
+Provides Converters between csv and yaml.
 
 Copyright (c) 2009 Johannes J. Schmidt, TF, released under the MIT license
