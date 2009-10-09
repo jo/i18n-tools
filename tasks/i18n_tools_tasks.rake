@@ -33,7 +33,8 @@ namespace :i18n do
           end
           # only show current
           hash = { locale => I18nTools::Hasher.load(array)[locale] }
-          puts YAML.dump(hash)
+          yamler = I18nTools::Yamler.new(hash)
+          yamler.puts
         end
       end
     end
