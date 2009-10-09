@@ -1,5 +1,4 @@
-require File.dirname(__FILE__) + '/../lib/i18n/arrayer'
-require File.dirname(__FILE__) + '/../lib/i18n/hasher'
+require File.dirname(__FILE__) + '/../init'
 require 'csv'
 
 namespace :i18n do
@@ -15,7 +14,7 @@ namespace :i18n do
         hash.update YAML.load(File.read(filename))
       end
 
-      array = I18n::Arrayer.load(hash)
+      array = I18nTools::Arrayer.load(hash)
       array.each { |line| puts CSV.generate_line line, ';' }
     end
 
@@ -33,7 +32,7 @@ namespace :i18n do
             array << row
           end
           # only show current
-          hash = { locale => I18n::Hasher.load(array)[locale] }
+          hash = { locale => I18nTools::Hasher.load(array)[locale] }
           puts YAML.dump(hash)
         end
       end

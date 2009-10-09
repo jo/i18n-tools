@@ -1,20 +1,18 @@
-module I18n
-  SCOPE_SEPERATOR = '.'
+require 'activesupport' # for deep_merge
 
+module I18nTools
   # builds hashes from arrays of i18n locale translations.
   module Hasher
-
     # builds a i18n Hash from Array.
     # the first entry of the array should contain the headers.
     # Eg: [:key, :de, :en]
     # Keys are namespaced by '.'
     # Eg: tools.button
     # This leads to nested hashes.
-    def self.load(array)
+    def self.load(array = [])
       return {} if array.empty?
       # first row is header
       locales = array.shift
-      raise 'No data given!' if array.empty?
       # remove first header entry, should be :key or whatever
       locales.shift
       raise 'No locales given!' if locales.empty?
@@ -36,7 +34,7 @@ module I18n
       hash = {}
       array.each do |row|
         key, value = row
-        hash.merge! unpack(key.to_s, value.to_s)
+        hash.deep_merge! unpack(key.to_s, value.to_s)
       end
       hash
     end

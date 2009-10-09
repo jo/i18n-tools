@@ -1,6 +1,4 @@
-module I18n
-  SCOPE_SEPERATOR = '.'
-
+module I18nTools
   module Arrayer
     def self.load(hash = {})
       return [] if hash.empty?
@@ -19,13 +17,11 @@ module I18n
       merge(locales)
     end
 
-    def self.pack(hash, scope = nil)
-      array = []
+    def self.pack(hash, array = [], scope = nil)
       hash.each do |key, value|
+        key = [scope, key].compact.join(SCOPE_SEPERATOR)
         if value.is_a?(Hash)
-          array += pack(value, key)
-        elsif scope
-          array << [[scope, key].join(SCOPE_SEPERATOR), value]
+          pack(value, array, key)
         else
           array << [key, value]
         end
@@ -41,7 +37,7 @@ module I18n
           key, value = key_value
           entry = array.detect { |e| e.first == key }
           unless entry
-            default =  key.sub(/^.*\./, '').gsub('_', ' ').capitalize
+            default =  key.sub(/^.*\./, '').gsub('_', ' ')
             entry = Array.new(size + 1, default)
             entry[0] = key
             array << entry
@@ -49,6 +45,7 @@ module I18n
           entry[i+1] = value
         end
       end
+      array.sort! { |a, b| a.first <=> b.first }
       array
     end
   end
