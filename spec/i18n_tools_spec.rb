@@ -43,6 +43,18 @@ describe "I18nTools Tools" do
     I18nTools::Hasher.load(array).should == hash
   end
 
+  it "should build array" do
+    hash = {
+      'de' => { 'key' => ['value1', 'value2'] },
+    }
+    array = [
+      ['key', 'de'],
+      ['key', '[value1, value2]'],
+    ]
+    I18nTools::Arrayer.load(hash).should == array
+    I18nTools::Hasher.load(array).should == hash
+  end
+
   it "should build simple with two headers" do
     hash = {
       'de' => { 'key' => 'value1' },

@@ -20,8 +20,11 @@ module I18nTools
     def self.pack(hash, array = [], scope = nil)
       hash.each do |key, value|
         key = [scope, key].compact.join(SCOPE_SEPERATOR)
-        if value.is_a?(Hash)
+        case value
+        when Hash
           pack(value, array, key)
+        when Array
+          array << [key, '[%s]' % value.join(', ')]
         else
           array << [key, value]
         end

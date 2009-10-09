@@ -39,11 +39,15 @@ module I18nTools
       hash
     end
 
+    ARRAY_EXP = /\A\[(.*)\]\z/
     # takes care of scopes.
     # eg.
     # unpack('a', 'b') #=> { 'a' => 'b' }
     # unpack('a.b', 'c') #=> { 'a' => { 'b' => 'c' } }
     def self.unpack(key, value)
+      if value =~ ARRAY_EXP
+        value = value.gsub(ARRAY_EXP, '\1').split(/,\s*/)
+      end
       if key.include?(SCOPE_SEPERATOR)
         keys = key.split(SCOPE_SEPERATOR)
         key = keys.shift
