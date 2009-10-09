@@ -10,7 +10,7 @@ module I18n
     # Keys are namespaced by '.'
     # Eg: tools.button
     # This leads to nested hashes.
-    def self.load(*array)
+    def self.load(array)
       return {} if array.empty?
       # first row is header
       locales = array.shift
