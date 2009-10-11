@@ -2,15 +2,12 @@ require 'rake'
 require 'rake/testtask'
 require 'rake/rdoctask'
 
-desc 'Default: run unit tests.'
+desc 'Default: run spec tests.'
 task :default => :test
 
 desc 'Test the i18n_tools plugin.'
-Rake::TestTask.new(:test) do |t|
-  t.libs << 'lib'
-  t.libs << 'test'
-  t.pattern = 'test/**/*_test.rb'
-  t.verbose = true
+task :test do |t|
+  system "spec #{File.dirname(__FILE__) + '/spec'} -cfn"
 end
 
 desc 'Generate documentation for the i18n_tools plugin.'
